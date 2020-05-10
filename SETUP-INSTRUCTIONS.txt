@@ -1,0 +1,14 @@
+Unilever Test| Task - Setup Instructions
+=======================================
+To run the application, you will to follow the steps below:
+1. Install MySQL database
+
+2. Run the database scripts to create a user and load sample data
+   a. sql-scripts/01-create-user.sql
+   b. sql-scripts/02-employee-departments.sql
+
+3. Open the source code for the appropriate version
+
+4. Run the application: 
+   a. Select the file WebContent/index.html
+   b. Right-Click, select Run As > Run On Server

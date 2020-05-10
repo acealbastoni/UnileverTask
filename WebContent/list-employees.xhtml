@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+	<f:event type="preRenderView"
+		listener="#{employeeController.loadEmployees()}" />
+</f:metadata>
+
+<h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>Unilever Test App</title>
+
+	<h:outputStylesheet library="css" name="style.css" />
+
+</h:head>
+
+<h:body>
+
+	<div id="wrapper">
+		<div id="header">
+			<h2>Unilever Test</h2>
+		</div>
+	</div>
+
+	<div id="container">
+
+		<div id="content">
+
+			<h:messages globalOnly="true" />
+
+			<h:button value="Add Employee" styleClass="add-student-button"
+				outcome="add-employee-form" />
+
+			<h:form>
+
+				<p:dataTable value="#{employeeController.employees}"
+					var="tempEmployee" styleClass="demo-table"
+					headerClass="demo-table-header"
+					rowClasses="demo-table-odd-row,demo-table-even-row"
+					filteredValue="#{employeeController.selectedEmployees}"
+					widgetVar="employeesTable"
+					emptyMessage="No employee found with given criteria">
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Search all fields:" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('employeesTable').filter()" style="width:150px"
+								placeholder="Enter keyword" />
+						</p:outputPanel>
+					</f:facet>
+
+
+					<p:column filterBy="#{tempEmployee.name}" headerText="name"
+						footerText="contains" filterMatchMode="contains">
+						<h:outputText value="#{tempEmployee.name}" />
+					</p:column>
+
+					<p:column filterBy="#{tempEmployee.age}" headerText="age"
+						footerText="contains" filterMatchMode="contains">
+						<h:outputText value="#{tempEmployee.age}" />
+					</p:column>
+
+
+					<p:column filterBy="#{tempEmployee.salary}" headerText="salary"
+						footerText="contains" filterMatchMode="contains">
+						<h:outputText value="#{tempEmployee.salary}" />
+					</p:column>
+
+
+					<p:column filterBy="#{tempEmployee.department_id}" headerText="department_id"
+						footerText="contains" filterMatchMode="contains">
+						<h:outputText value="#{tempEmployee.department_id==1?'CS':tempEmployee.department_id==2?'IT':'IS'}" />
+					</p:column>
+
+
+                     <!-- 
+					<h:column>
+						the column header
+						<f:facet name="header">Department</f:facet>
+
+						 the value for each row
+						#{tempEmployee.department_id==1?"CS":tempEmployee.department_id==2?"IT":"IS"}
+					</h:column> -->
+
+
+					<p:column headerText="Action">
+						<!-- the column header -->
+
+						<!--  the value for each row -->
+						<p:commandLink value="Edit"
+							action="#{employeeController.loadEmployee(tempEmployee.id)}" />
+						|
+
+						<p:commandLink value="Delete"
+							onclick="if (!confirm('Are you sure you want to delete this Employee?')) return false"
+							action="#{employeeController.deleteEmployee(tempEmployee.id)}" />
+
+					</p:column>
+
+
+				</p:dataTable>
+
+			</h:form>
+
+		</div>
+
+	</div>
+
+</h:body>
+
+</html>
